@@ -10,7 +10,6 @@ RUN apt-get install -y python-pip python-dev build-essential
 
 RUN mkdir /opt/app
 ADD . /opt/app/
-RUN pip install -r /opt/app/requirements.txt
 RUN pip install -r /opt/app/requirements-test.txt
 
 EXPOSE 5000
