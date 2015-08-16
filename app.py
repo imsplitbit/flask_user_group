@@ -301,4 +301,4 @@ def validate_user_data(user_data):
 if __name__ == '__main__':
     app.debug = True
     db.create_all()
-    app.run()
+    app.run(host='0.0.0.0')
