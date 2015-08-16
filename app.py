@@ -9,11 +9,20 @@ from flask import (
 )
 from flask.ext.sqlalchemy import SQLAlchemy
 
-
+###############################
+#                             #
+# Basic app boilerplate setup #
+#                             #
+###############################
 app = Flask('user_group_app')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 db = SQLAlchemy(app)
 
+###################
+#                 #
+# Database Models #
+#                 #
+###################
 user_groups = db.Table('usergroups',
     db.Column('userid', db.Integer, db.ForeignKey('users.id')),
     db.Column('groupid', db.Integer, db.ForeignKey('groups.id')),
@@ -51,7 +60,11 @@ class Group(db.Model):
     def __repr__(self):
         return '<Group {}>'.format(self.groupid)
 
-
+##########################
+#                        #
+# API Routes / Endpoints #
+#                        #
+##########################
 @app.route('/users', methods=['POST'])
 def new_user():
     user_data = validate_user_data(request.data)
@@ -249,6 +262,11 @@ def add_group():
     return make_response(json.dumps(result), 200)
 
 
+##################
+#                #
+# Helper Methods #
+#                #
+##################
 def create_user_response(db_user):
     result = {
         'first_name': db_user.first_name,
@@ -298,6 +316,11 @@ def validate_user_data(user_data):
 
     return user_data
 
+#################
+#               #
+# Start the app #
+#               #
+#################
 if __name__ == '__main__':
     app.debug = True
     db.create_all()
